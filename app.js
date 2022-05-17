@@ -5,8 +5,10 @@ const app = express();
 const port = 3001;
 const ws = expressWs(app);
 import cors from "cors";
+import "dotenv/config";
 
-const MONGO_URL = process.env.mongo_url;
+const MONGO_URL = process.env.MONGO_URI;
+
 const MONGO_CLIENT = new MongoClient(MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
