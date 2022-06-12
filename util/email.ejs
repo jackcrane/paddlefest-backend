@@ -1,0 +1,47 @@
+<html>
+  <h1>Your Paddlefest volunteer confirmation</h1>
+  <p>
+    Thank you for registering to be a volunteer for Paddlefest! Our event could
+    not possibly happen without volunteers like you! We are looking forward to
+    seeing you at the event!
+  </p>
+  <p>
+    We will get in contact with you with more information about the event if
+    necessary, but if necessary, please reach out to us at
+    <a href="mailto:info@ohioriverpaddlefest.org"
+      >info@ohioriverpaddlefest.org</a
+    >!
+  </p>
+  <p>For your records, here is a copy of your information:</p>
+  <table>
+    <tr>
+      <td>Name</td>
+      <td><%= data.name %></td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td><%= data.email %></td>
+    </tr>
+    <tr>
+      <td>Phone</td>
+      <td><%= data.phonenum %></td>
+    </tr>
+    <tr>
+      <td>Shirt Size</td>
+      <td><%= data.shirt_size %></td>
+    </tr>
+  </table>
+  <p>And here are your shifts:</p>
+  <pre><%- jobs.replace(/\n/g, '<br />') %></pre>
+  <p>
+    If anything goes wrong on our end, we may ask for your Volunteer ID number:
+    <%= id %>
+  </p>
+  <br />
+  <p>
+    Again, thank you for volunteering for Paddlefest! We are looking forward to
+    working with you, and if you need us in the meantime or need to change your
+    volunteer signup, please don't hesitate to reach out.
+  </p>
+  <p>- The Paddlefest volunteer committee</p>
+</html>
