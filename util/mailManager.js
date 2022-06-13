@@ -30,7 +30,10 @@ const switchForFullLocation = (loc) => {
       return "Outdoors for All Expo";
       break;
     case "putin":
-      return "Put-in";
+      return "Launch";
+      break;
+    case "launch":
+      return "Launch";
       break;
     case "midpoint":
       return "4.5 Mile Finish Line / Midpoint";

@@ -478,6 +478,12 @@ app.post("/update-notes", async (req, res) => {
   res.sendStatus(200);
 });
 
+app.get("/jobs", async (req, res) => {
+  const collection = db.collection("volunteer-jobs");
+  const jobs = await collection.find({}).toArray();
+  res.json(jobs);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
