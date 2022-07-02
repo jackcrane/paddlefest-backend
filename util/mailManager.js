@@ -20,6 +20,7 @@ const db = await MONGO_CLIENT.db("paddlefest");
 const collection = await db.collection("volunteer-jobs");
 
 import moment from "moment";
+import tz from "moment-timezone";
 
 import ejs from "ejs";
 import { readFileSync, writeFileSync } from "fs";
@@ -77,17 +78,57 @@ const stringify = async (d) => {
     Object.keys(d[loc]).forEach(async (job) => {
       str += `├─ ${job}\n`;
       d[loc][job].forEach((shift) => {
-        str += `├── ${moment(shift.start).format("hh:mm a")} - ${moment(
-          shift.end
-        ).format("hh:mm a")}\n`;
+        str += `├── ${moment(shift.start)
+          .tz("America/New_York")
+          .format("hh:mm a")} - ${moment(shift.end)
+          .tz("America/New_York")
+          .format("hh:mm a")}\n`;
       });
     });
   });
   return str;
 };
 
+const switchForParking = (loc) => {
+  switch (loc) {
+    case "expo":
+      return "<b>Friday Outdoors for All Expo</b>: Schmidt Recreation Complex is at 2944 Humbert Ave. Volunteer parking at Schmidt is extremely limited. If you aren’t helping early in the day (before the Expo starts), we suggest parking on an adjacent street or at Riverview East Academy, 3555 Kellogg Ave., to avoid traffic congestion. Check in at the Boat House to receive your T-shirt and instructions. ";
+      break;
+    case "putin":
+      return "<b>Saturday Launch</b>: Schmidt Recreation Complex is at 2944 Humbert Ave. Enter on St. Peters Street and check in with the parking company for directions to volunteer";
+      break;
+    case "launch":
+      return "<b>Saturday Launch</b>: Schmidt Recreation Complex is at 2944 Humbert Ave. Enter on St. Peters Street and check in with the parking company for directions to volunteer";
+      break;
+    case "midpoint":
+      return "<b>Saturday 4.5 Mile Finish Line / 9.0 Mile Midpoint</b>: The Public Landing is at 435 E. Mehring Way.";
+      break;
+    case "finishline":
+      return "<b>Saturday Finish Line Festival</b>: Gilday Riverside Park is at 3540 Southside Ave. Check in with the parking company for directions to the volunteer parking area.";
+      break;
+    default:
+      return "";
+  }
+};
+
+const parking = (data) => {
+  let str = "";
+  console.log("pj", data);
+  for (let loc in data) {
+    str += `${switchForParking(loc)}\n`;
+  }
+  return str;
+};
+
+const renderShifts = async (text) => {
+  let p = await (await stringify(await parse(text))).toString();
+  return p;
+};
+
 const send = async ({ to, text, id }) => {
   let p = await (await stringify(await parse(text.jobs))).toString();
+  let _parking = parking(text.jobs);
+  console.log(_parking);
   console.log(p);
   let html = ejs.render(
     readFileSync("./util/email.ejs", { encoding: "utf8" }),
@@ -95,12 +136,38 @@ const send = async ({ to, text, id }) => {
       data: text,
       jobs: p,
       id: id,
+      parking: _parking,
     }
   );
   writeFileSync("./util/email.html", html);
   let m = await mg.messages.create("mailgun.jackcrane.rocks", {
     from: "Paddlefest Volunteer Registration <paddlefest@mailgun.jackcrane.rocks>",
     subject: "Your Paddlefest volunteer registration confirmation",
+    to: [to],
+    cc: "3jbc22@gmail.com",
+    html,
+  });
+  return m.status === 200;
+};
+
+const update = async ({ to, text, id }) => {
+  let p = await (await stringify(await parse(text.jobs))).toString();
+  let _parking = parking(text.jobs);
+  console.log(_parking);
+  console.log(p);
+  let html = ejs.render(
+    readFileSync("./util/email.ejs", { encoding: "utf8" }),
+    {
+      data: text,
+      jobs: renderShifts(text.jobs),
+      id: id,
+      parking: _parking,
+    }
+  );
+  writeFileSync("./util/email.html", html);
+  let m = await mg.messages.create("mailgun.jackcrane.rocks", {
+    from: "Paddlefest Volunteer Registration <paddlefest@mailgun.jackcrane.rocks>",
+    subject: "Updates to your Paddlefest volunteer registration",
     to: [to],
     cc: "3jbc22@gmail.com",
     html,
@@ -132,3 +199,4 @@ const send = async ({ to, text, id }) => {
 // );
 
 export default send;
+export { renderShifts, update };

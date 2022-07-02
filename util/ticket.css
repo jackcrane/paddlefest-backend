@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v11/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v11/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+* {
+  font-family: "Inter", sans-serif;
+}
+body {
+  padding: 20px;
+}
+header {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: center;
+}
+header img {
+  width: 200px;
+  height: auto;
+}
+header h1 {
+  font-weight: bold;
+  margin-top: 0px;
+}
+header h2 {
+  margin: 0;
+  font-weight: normal;
+}
+h3 {
+  font-size: 24px;
+  font-weight: normal;
+}

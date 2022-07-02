@@ -1,16 +1,10 @@
 <html>
   <h1>Your Paddlefest volunteer confirmation</h1>
   <p>
-    Thank you for registering to be a volunteer for Paddlefest! Our event could
-    not possibly happen without volunteers like you! We are looking forward to
-    seeing you at the event!
-  </p>
-  <p>
-    We will get in contact with you with more information about the event if
-    necessary, but if necessary, please reach out to us at
-    <a href="mailto:info@ohioriverpaddlefest.org"
-      >info@ohioriverpaddlefest.org</a
-    >!
+    Thank you for signing up to volunteer for Ohio River Paddlefest! Our event
+    could not possibly happen without volunteers like you. We appreciate your
+    help raising funds to support Adventure Crew’s mission of connecting city
+    teens to nature and each other through outdoors adventures!
   </p>
   <p>For your records, here is a copy of your information:</p>
   <table>
@@ -31,17 +25,25 @@
       <td><%= data.shirt_size %></td>
     </tr>
   </table>
-  <p>And here are your shifts:</p>
+  <p>Your shifts are:</p>
   <pre><%- jobs.replace(/\n/g, '<br />') %></pre>
   <p>
     If anything goes wrong on our end, we may ask for your Volunteer ID number:
     <%= id %>
   </p>
   <br />
+  <p>Be sure to wear comfortable shoes and bring a water bottle.</p>
   <p>
-    Again, thank you for volunteering for Paddlefest! We are looking forward to
-    working with you, and if you need us in the meantime or need to change your
-    volunteer signup, please don't hesitate to reach out.
+    Again, thank you for volunteering for Paddlefest! If you have any questions,
+    please don’t hesitate to contact us at
+    <a href="mailto:info@ohioriverpaddlefest.org"
+      >info@ohioriverpaddlefest.org</a
+    >. We look forward to seeing you at the event!
   </p>
-  <p>- The Paddlefest volunteer committee</p>
+  <p>- The Ohio River Paddlefest team</p>
+  <br />
+  <br />
+  <hr />
+  <h2>Parking instructions</h2>
+  <%- parking.replace(/\n/g, '<br />') %>
 </html>
